@@ -13,18 +13,32 @@ function isBuiltin(module) {
 	}
 }
 
+function isBinaryAddon(name) {
+	return /\.node$/i.test(name);
+}
+
 function saferequire(modulename, permissions) {
 	const sandbox = {
 		module: {},
 		require: function(name, perms) {
 			console.log('Requiring '+name);
-			if(isBuiltin(name)){
-				if(permissions && permissions[name]) {
+			if (isBuiltin(name)){
+				if (permissions && permissions[name]) {
 					return require(name);
+				} else {
+					throw new Error('Not permitted to require builtin module \'' + name + '\'');
+				}
+			} // de-facto else
+			if (isBinaryAddon(name)) {
+				if (permissions.binaryAddons === 'all') {
+					return require(name); // TODO: is the name resolved properly?
+				} else {
+					throw new Error('Not permitted to require binary addon \'' + name + '\'');
 				}
 			} else {
 				return saferequire(name);
 			}
+
 		},
 		console:console,
 		global:{},
