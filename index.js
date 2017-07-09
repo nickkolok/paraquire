@@ -17,7 +17,7 @@ function isBinaryAddon(name) {
 	return /\.node$/i.test(name);
 }
 
-function saferequire(modulename, permissions) {
+function paraquire(modulename, permissions) {
 	const sandbox = {
 		module: {},
 		require: function(name, perms) {
@@ -36,7 +36,7 @@ function saferequire(modulename, permissions) {
 					throw new Error('Not permitted to require binary addon \'' + name + '\'');
 				}
 			} else {
-				return saferequire(name);
+				return paraquire(name);
 			}
 
 		},
@@ -53,21 +53,21 @@ function saferequire(modulename, permissions) {
 }
 
 /*
-const MurmurHash3 = saferequire('imurmurhash');
+const MurmurHash3 = paraquire('imurmurhash');
 
 var hashState = MurmurHash3('string');
 console.log(hashState.result());
 
-//saferequire('./evil-lib.js')()();
+//paraquire('./evil-lib.js')()();
 
-//var crypto = saferequire('crypto');
+//var crypto = paraquire('crypto');
 */
 
-var uniqueSlug = saferequire('unique-slug', {'crypto': true});
+var uniqueSlug = paraquire('unique-slug', {'crypto': true});
 
 var randomSlug = uniqueSlug();
 var fileSlug = uniqueSlug('/etc/passwd');
 
 console.log(randomSlug,fileSlug);
 
-saferequire('./lib-with-global-1');
+paraquire('./lib-with-global-1');
