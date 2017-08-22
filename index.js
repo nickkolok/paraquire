@@ -17,6 +17,8 @@ function isBinaryAddon(name) {
 	return /\.node$/i.test(name);
 }
 
+var filecache = {};
+
 function paraquire(modulename, permissions) {
 	const sandbox = {
 		module: {},
@@ -45,7 +47,11 @@ function paraquire(modulename, permissions) {
 	};
 
 	var moduleFile = require.resolve(modulename);
-	var moduleContents = fs.readFileSync(moduleFile, 'utf8');
+
+	if (!(moduleFile in filecache)){
+		filecache[moduleFile] = fs.readFileSync(moduleFile, 'utf8')
+	}
+	var moduleContents = filecache[moduleFile];
 
 	vm.runInNewContext(moduleContents,sandbox,{filename:moduleFile});
 
