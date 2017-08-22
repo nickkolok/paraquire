@@ -68,7 +68,7 @@ console.log(hashState.result());
 
 //var crypto = paraquire('crypto');
 */
-
+/*
 var uniqueSlug = paraquire('unique-slug', {'crypto': true});
 
 var randomSlug = uniqueSlug();
@@ -77,3 +77,6 @@ var fileSlug = uniqueSlug('/etc/passwd');
 console.log(randomSlug,fileSlug);
 
 paraquire('./lib-with-global-1');
+*/
+
+module.exports = paraquire;
