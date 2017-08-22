@@ -1,0 +1,25 @@
+{
+  "name": "paraquire",
+  "version": "0.0.1",
+  "description": "Paranoidal require",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickkolok/paraquire.git"
+  },
+  "author": "Nikolay Avdeev <nickkolok@mail.ru>",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nickkolok/paraquire/issues"
+  },
+  "homepage": "https://github.com/nickkolok/paraquire#readme"
+}
