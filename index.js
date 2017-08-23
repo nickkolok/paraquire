@@ -2,6 +2,7 @@ const util = require('util');
 const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
+const Module = require('module');
 
 // From: https://github.com/nodejs/node/issues/3307#issuecomment-185734608
 function isBuiltin(module) {
@@ -19,7 +20,7 @@ function isBinaryAddon(name) {
 
 var filecache = {};
 
-function paraquire(modulename, permissions) {
+function paraquire(request, permissions, parent) {
 	const sandbox = {
 		module: {},
 		require: function(name, perms) {
@@ -46,7 +47,9 @@ function paraquire(modulename, permissions) {
 		global:{},
 	};
 
-	var moduleFile = require.resolve(modulename);
+	//var moduleFile = require.resolve(request);
+
+	var moduleFile = Module._resolveFilename(request, parent, false);
 
 	if (!(moduleFile in filecache)){
 		filecache[moduleFile] = fs.readFileSync(moduleFile, 'utf8')
@@ -79,4 +82,11 @@ console.log(randomSlug,fileSlug);
 paraquire('./lib-with-global-1');
 */
 
-module.exports = paraquire;
+
+function generateParaquireByParent (parent) {
+	return function(request, permissions) {
+		return paraquire(request, permissions, parent);
+	}
+}
+
+module.exports = generateParaquireByParent;
