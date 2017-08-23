@@ -46,7 +46,8 @@ function paraquire(request, permissions, parent) {
 					throw new Error('Not permitted to require binary addon \'' + _request + '\'');
 				}
 			} else {
-				return paraquire(_request);
+				//TODO: avoid parent
+				return runFile(_request, parent, _sandbox);
 			}
 
 		};
