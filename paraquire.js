@@ -21,9 +21,15 @@ function isBinaryAddon(name) {
 var filecache = {};
 
 function paraquire(request, permissions, parent) {
-	const sandbox = {
+	var sandbox = {
 		module: {},
-		require: function(_request) {
+		global:{},
+	};
+
+	vm.createContext(sandbox);
+
+	sandbox.require = (function(_sandbox){
+		return function(_request) {
 			console.log('Requiring ' + _request);
 			if (isBuiltin(_request)){
 				if (permissions && permissions.builtin && permissions.builtin[_request]) {
@@ -43,11 +49,9 @@ function paraquire(request, permissions, parent) {
 				return paraquire(_request);
 			}
 
-		},
-		global:{},
-	};
+		};
+	})(sandbox);
 
-	vm.createContext(sandbox);
 
 	if(permissions && permissions.sandbox) {
 		for (var prop in permissions.sandbox) {
