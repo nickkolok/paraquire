@@ -23,24 +23,24 @@ var filecache = {};
 function paraquire(request, permissions, parent) {
 	const sandbox = {
 		module: {},
-		require: function(name) {
-			console.log('Requiring '+name);
-			if (isBuiltin(name)){
-				if (permissions && permissions.builtin && permissions.builtin[name]) {
-					return require(name);
+		require: function(_request) {
+			console.log('Requiring ' + _request);
+			if (isBuiltin(_request)){
+				if (permissions && permissions.builtin && permissions.builtin[_request]) {
+					return require(_request);
 				} else {
-					throw new Error('Not permitted to require builtin module \'' + name + '\'');
+					throw new Error('Not permitted to require builtin module \'' + _request + '\'');
 				}
 			} // de-facto else
-			if (isBinaryAddon(name)) {
+			if (isBinaryAddon(_request)) {
 				if (permissions && permissions.binaryAddons === 'all') {
 					//TODO: с этого места поподробнее, предусмотреть не только 'all'
-					return require(name); // TODO: is the name resolved properly?
+					return require(_request); // TODO: is the name resolved properly?
 				} else {
-					throw new Error('Not permitted to require binary addon \'' + name + '\'');
+					throw new Error('Not permitted to require binary addon \'' + _request + '\'');
 				}
 			} else {
-				return paraquire(name);
+				return paraquire(_request);
 			}
 
 		},
