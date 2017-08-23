@@ -55,6 +55,13 @@ function paraquire(request, permissions, parent) {
 
 	//var moduleFile = require.resolve(request);
 
+	console.log(request);
+//	console.log(parent);
+
+	return runFile(request, parent, sandbox);
+}
+
+function runFile(request, parent, sandbox){
 	var moduleFile = Module._resolveFilename(request, parent, false);
 
 	if (!(moduleFile in filecache)){
