@@ -1,1 +1,3 @@
-process.argv[3] = "";
+module.exports = function() {
+    return "!!" + process.argv;
+}

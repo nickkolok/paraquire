@@ -1,1 +1,3 @@
-console.log('Paraquired lib');
+module.exports = function(){
+    console.log('Paraquired lib');
+}
