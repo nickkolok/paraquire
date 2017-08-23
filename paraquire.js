@@ -47,6 +47,8 @@ function paraquire(request, permissions, parent) {
 		global:{},
 	};
 
+	vm.createContext(sandbox);
+
 	if(permissions && permissions.sandbox) {
 		for (var prop in permissions.sandbox) {
 			sandbox[prop] = permissions.sandbox[prop];
@@ -69,7 +71,7 @@ function runFile(request, parent, sandbox){
 	}
 	var moduleContents = filecache[moduleFile];
 
-	vm.runInNewContext(moduleContents,sandbox,{filename:moduleFile});
+	vm.runInContext(moduleContents,sandbox,{filename:moduleFile});
 
 	return sandbox.module.exports;
 }
