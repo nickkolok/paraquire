@@ -44,9 +44,14 @@ function paraquire(request, permissions, parent) {
 			}
 
 		},
-		console:console,
 		global:{},
 	};
+
+	if(permissions && permissions.sandbox) {
+		for (var prop in permissions.sandbox) {
+			sandbox[prop] = permissions.sandbox[prop];
+		}
+	}
 
 	//var moduleFile = require.resolve(request);
 
