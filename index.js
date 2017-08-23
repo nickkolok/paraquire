@@ -33,7 +33,8 @@ function paraquire(request, permissions, parent) {
 				}
 			} // de-facto else
 			if (isBinaryAddon(name)) {
-				if (permissions.binaryAddons === 'all') {
+				if (permissions && permissions.binaryAddons === 'all') {
+					//TODO: с этого места поподробнее, предусмотреть не только 'all'
 					return require(name); // TODO: is the name resolved properly?
 				} else {
 					throw new Error('Not permitted to require binary addon \'' + name + '\'');
