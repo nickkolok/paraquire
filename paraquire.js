@@ -23,7 +23,7 @@ var filecache = {};
 function paraquire(request, permissions, parent) {
 	const sandbox = {
 		module: {},
-		require: function(name, perms) {
+		require: function(name) {
 			console.log('Requiring '+name);
 			if (isBuiltin(name)){
 				if (permissions && permissions.builtin && permissions.builtin[name]) {
