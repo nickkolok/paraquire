@@ -26,7 +26,7 @@ function paraquire(request, permissions, parent) {
 		require: function(name, perms) {
 			console.log('Requiring '+name);
 			if (isBuiltin(name)){
-				if (permissions && permissions[name]) {
+				if (permissions && permissions.builtin && permissions.builtin[name]) {
 					return require(name);
 				} else {
 					throw new Error('Not permitted to require builtin module \'' + name + '\'');
