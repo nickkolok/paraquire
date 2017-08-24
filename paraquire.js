@@ -12,7 +12,7 @@ function dbg(a,b,c){
 function generateRequire(_sandbox, permissions, moduleFile, parent){
 	// moduleFile is always full path to file
 	// TODO: can "index.js" be omitted? I don't know
-	//console.log("moduleFile in generateRequire: " + moduleFile);
+	// dbg("moduleFile in generateRequire: " + moduleFile);
 	return function(_request) {
 		//console.log('Requiring ' + _request);
 		if (t.isBuiltin(_request)){
@@ -32,8 +32,8 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 		} else {
 			//TODO: don't do this work every time, use closures
 			var childFile = t.resolveChildRequest(moduleFile, _request);
-			dbg(moduleFile, childFile, _request);
-			dbg(t.ownMainFileName, t.ownToolsFileName);
+			//dbg(moduleFile, childFile, _request);
+			//dbg(t.ownMainFileName, t.ownToolsFileName);
 			if (
 				moduleFile === t.ownMainFileName
 			&&
@@ -59,10 +59,9 @@ function paraquire(request, permissions, parent) {
 		}
 	}
 
-//	console.log('parent in paraquire():');
-//	console.log(parent);
-//	console.log(parent.filename);
-//	var moduleFile = t.resolveModuleRequest(request, parent);
+//	dbg('parent in paraquire():');
+//	dbg(parent);
+//	dbg(parent.filename);
 	var moduleFile = t.resolveChildRequest(parent.filename, request);
 
 	return runFile(moduleFile, sandbox, permissions, parent);
@@ -76,12 +75,10 @@ function runFile(moduleFile, sandbox, permissions, parent){
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
-//	var returnedModule = {parent:{paths:parent.paths}};
 	var returnedModule = {
 		parent:parent,
 		filename: moduleFile,
 	};
-//	var returnedModule = {parent:{paths:parent.paths,filename:parent.filename}};
 	premodule(
 		generateRequire(sandbox, permissions, moduleFile, returnedModule),
 		returnedModule
