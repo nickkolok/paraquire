@@ -1,3 +1,5 @@
+'use strict';
+
 const util = require('util');
 const vm = require('vm');
 const fs = require('fs');
