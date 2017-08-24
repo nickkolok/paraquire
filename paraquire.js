@@ -23,6 +23,20 @@ function isBinaryAddon(name) {
 var scriptcache = {};
 
 
+function resolveChildRequest(moduleFile, _request){
+	var dirname = path.dirname(moduleFile);
+	var paths = Module._nodeModulePaths(dirname);
+	//TODO: don't do this work every time, use closures
+	paths.unshift(dirname);
+	var parent = {
+		paths: paths,
+		id: moduleFile,
+		filename: moduleFile,
+	};
+	return Module._resolveFilename(_request, parent, false);
+
+}
+
 function generateRequire(_sandbox, permissions, moduleFile){
 	return function(_request) {
 		console.log('Requiring ' + _request);
@@ -42,15 +56,7 @@ function generateRequire(_sandbox, permissions, moduleFile){
 			}
 		} else {
 			//TODO: don't do this work every time, use closures
-			var dirname = path.dirname(moduleFile);
-			var paths = Module._nodeModulePaths(dirname);
-			paths.unshift(dirname);
-			var parent = {
-				paths: paths,
-				id: moduleFile,
-				filename: moduleFile,
-			};
-			var childFile = Module._resolveFilename(_request, parent, false);
+			var childFile = resolveChildRequest(moduleFile, _request);
 
 			return runFile(childFile, _sandbox, permissions);
 		}
