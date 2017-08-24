@@ -40,14 +40,14 @@ function generateRequire(_sandbox, permissions, parent){
 			}
 		} else {
 			//TODO: avoid parent
-			return runFile(_request, parent, _sandbox);
+			return runFile(_request, parent, _sandbox, permissions);
 		}
 	};
 }
 
 function paraquire(request, permissions, parent) {
 	var sandbox = {
-		module: {},
+//		module: {},
 		global:{},
 	};
 
@@ -68,23 +68,30 @@ function paraquire(request, permissions, parent) {
 	console.log(request);
 //	console.log(parent);
 
-	return runFile(request, parent, sandbox);
+	return runFile(request, parent, sandbox, permissions);
 }
 
-function runFile(request, parent, sandbox){
+function runFile(request, parent, sandbox, permissions){
 	var moduleFile = Module._resolveFilename(request, parent, false);
 
 	if (!(moduleFile in scriptcache)){
 		scriptcache[moduleFile] = new vm.Script(
-			fs.readFileSync(moduleFile, 'utf8'),
+			"(function(require, module){" +
+				fs.readFileSync(moduleFile, 'utf8') +
+			"})",
 			{filename:moduleFile}
 		)
 	}
 	var moduleContents = scriptcache[moduleFile];
 
-	moduleContents.runInContext(sandbox);
-
-	return sandbox.module.exports;
+	var premodule = moduleContents.runInContext(sandbox);
+	console.dir(premodule);
+	var returnedModule = {};
+	premodule(
+		generateRequire(sandbox, permissions, parent),
+		returnedModule
+	);
+	return returnedModule.exports;
 }
 
 /*
