@@ -21,7 +21,7 @@ function isBinaryAddon(name) {
 var scriptcache = {};
 
 
-function generateRequire(_sandbox, permissions, parent){
+function generateRequire(_sandbox, permissions, moduleFile){
 	return function(_request) {
 		console.log('Requiring ' + _request);
 		if (isBuiltin(_request)){
@@ -39,8 +39,20 @@ function generateRequire(_sandbox, permissions, parent){
 				throw new Error('Not permitted to require binary addon \'' + _request + '\'');
 			}
 		} else {
-			//TODO: avoid parent
-			return runFile(_request, parent, _sandbox, permissions);
+			//TODO: don't do this work every time, use closures
+			var dirname = path.dirname(moduleFile);
+			var paths = Module._nodeModulePaths(dirname);
+			paths.unshift(dirname);
+			var parent = {
+				paths: paths,
+				id: moduleFile,
+				filename: moduleFile,
+			};
+			console.log(parent.paths);
+			console.log(Module._resolveLookupPaths(_request, parent));
+			var childFile = Module._resolveFilename(_request, parent, false);
+
+			return runFile(childFile, _sandbox, permissions);
 		}
 	};
 }
@@ -63,11 +75,12 @@ function paraquire(request, permissions, parent) {
 	console.log(request);
 //	console.log(parent);
 
-	return runFile(request, parent, sandbox, permissions);
+	var moduleFile = Module._resolveFilename(request, parent, false);
+
+	return runFile(moduleFile, sandbox, permissions);
 }
 
-function runFile(request, parent, sandbox, permissions){
-	var moduleFile = Module._resolveFilename(request, parent, false);
+function runFile(moduleFile, sandbox, permissions){
 
 	if (!(moduleFile in scriptcache)){
 		scriptcache[moduleFile] = new vm.Script(
@@ -83,7 +96,7 @@ function runFile(request, parent, sandbox, permissions){
 	console.dir(premodule);
 	var returnedModule = {};
 	premodule(
-		generateRequire(sandbox, permissions, parent),
+		generateRequire(sandbox, permissions, moduleFile),
 		returnedModule
 	);
 	return returnedModule.exports;
