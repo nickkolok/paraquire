@@ -47,15 +47,10 @@ function generateRequire(_sandbox, permissions, parent){
 
 function paraquire(request, permissions, parent) {
 	var sandbox = {
-//		module: {},
 		global:{},
 	};
 
 	vm.createContext(sandbox);
-
-
-	sandbox.require = generateRequire(sandbox, permissions, parent);
-
 
 	if(permissions && permissions.sandbox) {
 		for (var prop in permissions.sandbox) {
