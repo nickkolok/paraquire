@@ -13,6 +13,9 @@ try{
 }
 
 function generateRequire(_sandbox, permissions, moduleFile){
+	// moduleFile is always full path to file
+	// TODO: can "index.js" be omitted? I don't know
+	//console.log("moduleFile in generateRequire: " + moduleFile);
 	return function(_request) {
 		console.log('Requiring ' + _request);
 		if (t.isBuiltin(_request)){
