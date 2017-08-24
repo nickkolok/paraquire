@@ -20,6 +20,31 @@ function isBinaryAddon(name) {
 
 var scriptcache = {};
 
+
+function generateRequire(_sandbox, permissions, parent){
+	return function(_request) {
+		console.log('Requiring ' + _request);
+		if (isBuiltin(_request)){
+			if (permissions && permissions.builtin && permissions.builtin[_request]) {
+				return require(_request);
+			} else {
+				throw new Error('Not permitted to require builtin module \'' + _request + '\'');
+			}
+		} // de-facto else
+		if (isBinaryAddon(_request)) {
+			if (permissions && permissions.binaryAddons === 'all') {
+				//TODO: с этого места поподробнее, предусмотреть не только 'all'
+				return require(_request); // TODO: is the name resolved properly?
+			} else {
+				throw new Error('Not permitted to require binary addon \'' + _request + '\'');
+			}
+		} else {
+			//TODO: avoid parent
+			return runFile(_request, parent, _sandbox);
+		}
+	};
+}
+
 function paraquire(request, permissions, parent) {
 	var sandbox = {
 		module: {},
@@ -28,30 +53,8 @@ function paraquire(request, permissions, parent) {
 
 	vm.createContext(sandbox);
 
-	sandbox.require = (function(_sandbox){
-		return function(_request) {
-			console.log('Requiring ' + _request);
-			if (isBuiltin(_request)){
-				if (permissions && permissions.builtin && permissions.builtin[_request]) {
-					return require(_request);
-				} else {
-					throw new Error('Not permitted to require builtin module \'' + _request + '\'');
-				}
-			} // de-facto else
-			if (isBinaryAddon(_request)) {
-				if (permissions && permissions.binaryAddons === 'all') {
-					//TODO: с этого места поподробнее, предусмотреть не только 'all'
-					return require(_request); // TODO: is the name resolved properly?
-				} else {
-					throw new Error('Not permitted to require binary addon \'' + _request + '\'');
-				}
-			} else {
-				//TODO: avoid parent
-				return runFile(_request, parent, _sandbox);
-			}
 
-		};
-	})(sandbox);
+	sandbox.require = generateRequire(sandbox, permissions, parent);
 
 
 	if(permissions && permissions.sandbox) {
