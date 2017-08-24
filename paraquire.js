@@ -12,7 +12,7 @@ try{
 	// __filename is not available
 }
 
-function generateRequire(_sandbox, permissions, moduleFile){
+function generateRequire(_sandbox, permissions, moduleFile, parent){
 	// moduleFile is always full path to file
 	// TODO: can "index.js" be omitted? I don't know
 	//console.log("moduleFile in generateRequire: " + moduleFile);
@@ -45,7 +45,7 @@ function generateRequire(_sandbox, permissions, moduleFile){
 			){
 				return t;
 			}
-			return runFile(childFile, _sandbox, permissions);
+			return runFile(childFile, _sandbox, permissions, parent);
 		}
 	};
 }
@@ -62,16 +62,16 @@ function paraquire(request, permissions, parent) {
 
 	var moduleFile = t.resolveModuleRequest(request, parent);
 
-	return runFile(moduleFile, sandbox, permissions);
+	return runFile(moduleFile, sandbox, permissions, parent);
 }
 
-function runFile(moduleFile, sandbox, permissions){
+function runFile(moduleFile, sandbox, permissions, parent){
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
 	var returnedModule = {};
 	premodule(
-		generateRequire(sandbox, permissions, moduleFile),
+		generateRequire(sandbox, permissions, moduleFile, parent),
 		returnedModule
 	);
 	return returnedModule.exports;
