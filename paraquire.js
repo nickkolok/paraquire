@@ -76,6 +76,7 @@ function runFile(moduleFile, sandbox, permissions, parent){
 
 	var premodule = moduleContents.runInContext(sandbox);
 	var returnedModule = {
+		exports: {},
 		parent:parent,
 		filename: moduleFile,
 	};
