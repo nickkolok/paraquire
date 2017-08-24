@@ -1,6 +1,17 @@
 'use strict';
 const t = require('./paraquire-tools.js');
 
+var ownMainFileName = null, ownToolsFileName = null;
+try{
+	ownMainFileName  = __filename;
+	ownToolsFileName = ownMainFileName.replace(/\.js$/,"-tools.js");
+	console.log('Paraquire self-located in:');
+	console.log('\t' + ownMainFileName );
+	console.log('\t' + ownToolsFileName);
+}catch(e){
+	// __filename is not available
+}
+
 function generateRequire(_sandbox, permissions, moduleFile){
 	return function(_request) {
 		console.log('Requiring ' + _request);
