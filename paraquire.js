@@ -35,7 +35,16 @@ function generateRequire(_sandbox, permissions, moduleFile){
 		} else {
 			//TODO: don't do this work every time, use closures
 			var childFile = t.resolveChildRequest(moduleFile, _request);
-
+			if (
+				moduleFile === ownMainFileName
+			&&
+				childFile === ownToolsFileName
+			&&
+				//TODO: unhardcode?
+				_request === './paraquire-tools.js'
+			){
+				return t;
+			}
 			return runFile(childFile, _sandbox, permissions);
 		}
 	};
