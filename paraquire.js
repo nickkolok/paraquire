@@ -48,8 +48,6 @@ function generateRequire(_sandbox, permissions, moduleFile){
 				id: moduleFile,
 				filename: moduleFile,
 			};
-			console.log(parent.paths);
-			console.log(Module._resolveLookupPaths(_request, parent));
 			var childFile = Module._resolveFilename(_request, parent, false);
 
 			return runFile(childFile, _sandbox, permissions);
@@ -70,11 +68,6 @@ function paraquire(request, permissions, parent) {
 		}
 	}
 
-	//var moduleFile = require.resolve(request);
-
-	console.log(request);
-//	console.log(parent);
-
 	var moduleFile = Module._resolveFilename(request, parent, false);
 
 	return runFile(moduleFile, sandbox, permissions);
@@ -93,7 +86,6 @@ function runFile(moduleFile, sandbox, permissions){
 	var moduleContents = scriptcache[moduleFile];
 
 	var premodule = moduleContents.runInContext(sandbox);
-	console.dir(premodule);
 	var returnedModule = {};
 	premodule(
 		generateRequire(sandbox, permissions, moduleFile),
