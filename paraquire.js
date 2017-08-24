@@ -18,7 +18,7 @@ function isBinaryAddon(name) {
 	return /\.node$/i.test(name);
 }
 
-var filecache = {};
+var scriptcache = {};
 
 function paraquire(request, permissions, parent) {
 	var sandbox = {
@@ -71,12 +71,15 @@ function paraquire(request, permissions, parent) {
 function runFile(request, parent, sandbox){
 	var moduleFile = Module._resolveFilename(request, parent, false);
 
-	if (!(moduleFile in filecache)){
-		filecache[moduleFile] = fs.readFileSync(moduleFile, 'utf8')
+	if (!(moduleFile in scriptcache)){
+		scriptcache[moduleFile] = new vm.Script(
+			fs.readFileSync(moduleFile, 'utf8'),
+			{filename:moduleFile}
+		)
 	}
-	var moduleContents = filecache[moduleFile];
+	var moduleContents = scriptcache[moduleFile];
 
-	vm.runInContext(moduleContents,sandbox,{filename:moduleFile});
+	moduleContents.runInContext(sandbox);
 
 	return sandbox.module.exports;
 }
