@@ -96,12 +96,9 @@ function runFile(moduleFile, sandbox, permissions){
 	return returnedModule.exports;
 }
 
+
+
 /*
-const MurmurHash3 = paraquire('imurmurhash');
-
-var hashState = MurmurHash3('string');
-console.log(hashState.result());
-
 //paraquire('./evil-lib.js')()();
 
 //var crypto = paraquire('crypto');
