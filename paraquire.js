@@ -1,15 +1,12 @@
 'use strict';
 const t = require('./paraquire-tools.js');
 
-var ownMainFileName = null, ownToolsFileName = null;
-try{
-	ownMainFileName  = __filename;
-	ownToolsFileName = ownMainFileName.replace(/\.js$/,"-tools.js");
-	console.log('Paraquire self-located in:');
-	console.log('\t' + ownMainFileName );
-	console.log('\t' + ownToolsFileName);
-}catch(e){
-	// __filename is not available
+function dbg(a,b,c){
+	try {
+		console.log(a,b,c);
+	} catch (error) {
+		// We can do nothing :-(
+	}
 }
 
 function generateRequire(_sandbox, permissions, moduleFile, parent){
@@ -17,7 +14,7 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 	// TODO: can "index.js" be omitted? I don't know
 	//console.log("moduleFile in generateRequire: " + moduleFile);
 	return function(_request) {
-		console.log('Requiring ' + _request);
+		//console.log('Requiring ' + _request);
 		if (t.isBuiltin(_request)){
 			if (permissions && permissions.builtin && permissions.builtin[_request]) {
 				return require(_request);
@@ -35,10 +32,12 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 		} else {
 			//TODO: don't do this work every time, use closures
 			var childFile = t.resolveChildRequest(moduleFile, _request);
+			dbg(moduleFile, childFile, _request);
+			dbg(t.ownMainFileName, t.ownToolsFileName);
 			if (
-				moduleFile === ownMainFileName
+				moduleFile === t.ownMainFileName
 			&&
-				childFile === ownToolsFileName
+				childFile === t.ownToolsFileName
 			&&
 				//TODO: unhardcode?
 				_request === './paraquire-tools.js'
@@ -60,18 +59,31 @@ function paraquire(request, permissions, parent) {
 		}
 	}
 
-	var moduleFile = t.resolveModuleRequest(request, parent);
+//	console.log('parent in paraquire():');
+//	console.log(parent);
+//	console.log(parent.filename);
+//	var moduleFile = t.resolveModuleRequest(request, parent);
+	var moduleFile = t.resolveChildRequest(parent.filename, request);
 
 	return runFile(moduleFile, sandbox, permissions, parent);
 }
 
 function runFile(moduleFile, sandbox, permissions, parent){
+	// moduleFile - full path to file which shoul be runned
+	// sandbox - context in which the file should be runned
+	// permissions - permissions object with which the file shoul be runned
+	// parent - module which is parent to running file
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
-	var returnedModule = {};
+//	var returnedModule = {parent:{paths:parent.paths}};
+	var returnedModule = {
+		parent:parent,
+		filename: moduleFile,
+	};
+//	var returnedModule = {parent:{paths:parent.paths,filename:parent.filename}};
 	premodule(
-		generateRequire(sandbox, permissions, moduleFile, parent),
+		generateRequire(sandbox, permissions, moduleFile, returnedModule),
 		returnedModule
 	);
 	return returnedModule.exports;

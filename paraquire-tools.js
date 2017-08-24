@@ -43,6 +43,7 @@ function isBuiltin(module) {
 }
 
 function resolveChildRequest(moduleFile, _request){
+    console.log('resolveChildRequest(' + moduleFile + ',' + _request + ')');
 	var dirname = path.dirname(moduleFile);
 	var paths = Module._nodeModulePaths(dirname);
 	//TODO: don't do this work every time, use closures
@@ -57,7 +58,22 @@ function resolveChildRequest(moduleFile, _request){
 }
 
 function resolveModuleRequest(request, parent){
+    console.log('resolveModuleRequest(' + request + ',');
+    console.log(parent);
+    console.log(')');
 	return Module._resolveFilename(request, parent, false);
+}
+
+
+var ownMainFileName = null, ownToolsFileName = null;
+try{
+	ownToolsFileName  = __filename;
+	ownMainFileName = ownToolsFileName.replace(/\-tools\.js$/,".js");
+	console.log('Paraquire self-located in:');
+	console.log('\t' + ownMainFileName );
+	console.log('\t' + ownToolsFileName);
+}catch(e){
+	// __filename is not available
 }
 
 module.exports = {
@@ -65,6 +81,8 @@ module.exports = {
     getScript: getScript,
     isBinaryAddon: isBinaryAddon,
     isBuiltin: isBuiltin,
+    ownMainFileName: ownMainFileName,
+    ownToolsFileName: ownToolsFileName,
     resolveChildRequest: resolveChildRequest,
     resolveModuleRequest: resolveModuleRequest,
 }
