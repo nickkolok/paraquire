@@ -1,3 +1,3 @@
 'use strict';
 // https://github.com/substack/browserify-handbook#browser-field
-module.exports = require;
+module.exports = function(){ return require;};
