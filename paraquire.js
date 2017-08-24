@@ -81,8 +81,7 @@ function paraquire(request, permissions, parent) {
 	return runFile(moduleFile, sandbox, permissions);
 }
 
-function runFile(moduleFile, sandbox, permissions){
-
+function getScript(moduleFile){
 	if (!(moduleFile in scriptcache)){
 		scriptcache[moduleFile] = new vm.Script(
 			"(function(require, module){" +
@@ -91,7 +90,11 @@ function runFile(moduleFile, sandbox, permissions){
 			{filename:moduleFile}
 		)
 	}
-	var moduleContents = scriptcache[moduleFile];
+	return scriptcache[moduleFile];
+}
+
+function runFile(moduleFile, sandbox, permissions){
+	var moduleContents = getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
 	var returnedModule = {};
