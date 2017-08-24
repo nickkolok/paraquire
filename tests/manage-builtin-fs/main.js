@@ -3,6 +3,7 @@ try{
     var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
     f();
 }catch(e){
+    console.log(e);
     throw new Error ('Unable to access permitted builtin module "fs"');
 }
 
