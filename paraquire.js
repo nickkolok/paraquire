@@ -56,7 +56,7 @@ function paraquire(request, permissions, parent) {
 	if (permissions && permissions.builtin && permissions.builtin[0]) {
 		//We cannot use instanceof Array or smth like this
 		var builtinObj={};
-		permissions.builtin.map(b => builtin[b]=true);
+		permissions.builtin.map(b => builtinObj[b]=true);
 		permissions.builtin = builtinObj;
 	}
 
