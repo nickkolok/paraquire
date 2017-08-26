@@ -51,3 +51,23 @@ try{
         throw new Error ('Error in two cosequential paraquire calls with different permissions');
     }
 }
+
+//Builtins as array
+
+accessed = false;
+try{
+    var f = paraquire("./lib-with-builtin-fs.js", {builtin:['http']});
+    f();
+    accessed = true;
+}catch(e){
+    if(accessed) {
+        throw new Error ('Able to access forbidden builtin module "fs", while only "http" is permitted');
+    }
+}
+
+try{
+    var f = paraquire("./lib-with-builtin-fs.js", {builtin:['fs', 'http']});
+    f();
+}catch(e){
+    throw new Error ('Unable to access permitted builtin module "fs"');
+}

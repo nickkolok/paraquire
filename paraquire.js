@@ -53,6 +53,13 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 function paraquire(request, permissions, parent) {
 	var sandbox = t.createSandbox();
 
+	if (permissions && permissions.builtin && permissions.builtin[0]) {
+		//We cannot use instanceof Array or smth like this
+		var builtinObj={};
+		permissions.builtin.map(b => builtin[b]=true);
+		permissions.builtin = builtinObj;
+	}
+
 	if(permissions && permissions.sandbox) {
 		for (var prop in permissions.sandbox) {
 			sandbox[prop] = permissions.sandbox[prop];
