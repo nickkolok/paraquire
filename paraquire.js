@@ -65,6 +65,16 @@ function paraquire(request, permissions, parent) {
 			for (var prop in permissions.sandbox) {
 				sandbox[prop] = permissions.sandbox[prop];
 			}
+		} else {
+			permissions.sandbox = {};
+		}
+
+		if(permissions.process){
+			if(permissions.sandbox.process){
+				throw new Error("Specifying both permissions.process and permissions.sandbox.process is forbidden");
+			}
+			sandbox.process={};
+			permissions.process.map(b => sandbox.process[b]=process[b]);			
 		}
 	}
 
