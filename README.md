@@ -38,4 +38,4 @@ var lib = paraquire('untrusted-lib',{
     }
 });
 ```
-So, `untrusted-lib` will have access to built-in modules `http` and `https` (i.e. `untrusted-lib` can do `require(https)`, but cannot do `require('fs)`) and to global `console`.
+So, `untrusted-lib` will have access to built-in modules `http` and `https` (i.e. `untrusted-lib` can do `require('https')`, but cannot do `require('fs')`) and to global `console`.
