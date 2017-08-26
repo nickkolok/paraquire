@@ -19,7 +19,7 @@ function createSandbox(){
 function getScript(moduleFile){
 	if (!(moduleFile in scriptcache)){
 		scriptcache[moduleFile] = new vm.Script(
-			"(function(require, module){" +
+			"(function(require, module, exports){" +
 				fs.readFileSync(moduleFile, 'utf8') +
 			"})",
 			{filename:moduleFile}

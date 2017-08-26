@@ -75,14 +75,16 @@ function runFile(moduleFile, sandbox, permissions, parent){
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
+	var returnedExports = {};
 	var returnedModule = {
-		exports: {},
+		exports: returnedExports,
 		parent:parent,
 		filename: moduleFile,
 	};
 	premodule(
 		generateRequire(sandbox, permissions, moduleFile, returnedModule),
-		returnedModule
+		returnedModule,
+		returnedExports
 	);
 	return returnedModule.exports;
 }
