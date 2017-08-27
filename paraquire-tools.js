@@ -9,12 +9,9 @@ var scriptcache = {};
 var   JSONcache = {};
 
 function createSandbox(){
-	var sandbox = {
-		global:{},
-	};
-
-	vm.createContext(sandbox);
-	return sandbox;
+	return vm.createContext({
+        global:{},
+    });
 }
 
 function getJSON(moduleFile){
