@@ -1,8 +1,8 @@
 {
   "name": "paraquire",
-  "version": "0.0.9",
+  "version": "0.0.14",
   "description": "Paranoidal require",
-  "main": "paraquire.js",
+  "main": "fallback.js",
   "browser": "browser.js",
   "directories": {
     "test": "tests"
