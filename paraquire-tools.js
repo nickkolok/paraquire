@@ -46,9 +46,10 @@ function isBuiltin(module) {
 		var resolved = require.resolve(module);
         console.log('It resolves to ' + resolved);
         console.log('Seems to ' + !resolved.includes(path.sep));
-		return !resolved.includes(path.sep);
+        console.log('Typeof resolved is' + (typeof resolved));
+		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
-        console.log(e);
+        //console.log(e);
 		return false;
 	}
 }
