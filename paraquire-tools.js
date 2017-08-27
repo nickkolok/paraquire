@@ -45,9 +45,13 @@ function isBinaryAddon(name) {
 // From: https://github.com/nodejs/node/issues/3307#issuecomment-185734608
 function isBuiltin(module) {
 	try {
+        console.log('Is "'+module+'" builtin?');
 		var resolved = require.resolve(module);
+        console.log('It resolves to ' + resolved);
+        console.log('Seems to ' + !resolved.includes(path.sep));
 		return !resolved.includes(path.sep);
 	} catch(e) {
+        console.log(e);
 		return false;
 	}
 }
