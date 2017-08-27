@@ -29,9 +29,10 @@
                 try{
                     // console may be undefined... khm, why?
                     // I don't know but I'm paranoid enough!
-                    console.log('WARNING !!!');
-                    console.log('Your NodeJS is too old, paraquire cannot protect it.');
-                    console.log('No rights management will be done.');
+                    console.log('/**********************  WARNING  ***********************/');
+                    console.log('/* Your NodeJS is too old, paraquire cannot protect it. */');
+                    console.log('/* No rights management will be done.                   */');
+                    console.log('/********************************************************/');
                     module.exports = fallbackRequire;
                     return;
                 } catch(e){
@@ -52,9 +53,10 @@
         try{
             // console may be undefined... khm, why?
             // I don't know but I'm paranoid enough!
-            console.log('WARNING !!!');
-            console.log('Something went wrong, paraquire cannot protect you.');
-            console.log('No rights management will be done.');
+            console.log('/**********************  WARNING  **********************/');
+            console.log('/* Something went wrong, paraquire cannot protect you. */');
+            console.log('/* No rights management will be done.                  */');
+            console.log('/*******************************************************/');
             module.exports = fallbackRequire;
             return;
         } catch(e){
