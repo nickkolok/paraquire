@@ -46,7 +46,8 @@ function isBuiltin(module) {
 		var resolved = require.resolve(module);
         console.log('It resolves to ' + resolved);
         console.log('Seems to ' + resolved.indexOf(path.sep) === -1);
-        console.log('Typeof resolved is' + (typeof resolved));
+        console.log('Typeof resolved is ' + (typeof resolved));
+        console.log('path.sep is ' + path.sep);
 		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
         console.log(e);
