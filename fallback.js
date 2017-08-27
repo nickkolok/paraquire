@@ -24,7 +24,7 @@
         try{
             // Process may be undefined
             // For example, if we are inside other successful paraquire
-            if(process.version[0]==='0'){
+            if(process.version[1]==='0'){
                 // Now paraquire does not support Node <=0.12
                 try{
                     // console may be undefined... khm, why?

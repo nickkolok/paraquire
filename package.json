@@ -1,6 +1,6 @@
 {
   "name": "paraquire",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Paranoidal require",
   "main": "fallback.js",
   "browser": "browser.js",
