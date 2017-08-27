@@ -49,7 +49,7 @@ function isBuiltin(module) {
         console.log('Typeof resolved is' + (typeof resolved));
 		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
-        //console.log(e);
+        console.log(e);
 		return false;
 	}
 }
