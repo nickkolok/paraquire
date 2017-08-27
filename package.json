@@ -1,6 +1,6 @@
 {
   "name": "paraquire",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "description": "Paranoidal require",
   "main": "fallback.js",
   "browser": "browser.js",
@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm install imurmurhash callsite; ln -s .. node_modules/paraquire; nodejs tests"
   },
   "repository": {
     "type": "git",
