@@ -45,7 +45,7 @@ function isBuiltin(module) {
         console.log('Is "'+module+'" builtin?');
 		var resolved = require.resolve(module);
         console.log('It resolves to ' + resolved);
-        console.log('Seems to ' + !resolved.includes(path.sep));
+        console.log('Seems to ' + resolved.indexOf(path.sep) === -1);
         console.log('Typeof resolved is' + (typeof resolved));
 		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
