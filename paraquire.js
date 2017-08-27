@@ -10,6 +10,9 @@ function dbg(a,b,c){
 }
 
 function generateRequire(_sandbox, permissions, moduleFile, parent){
+	if(!permissions){
+		permissions = {};
+	}
 	// moduleFile is always full path to file
 	// TODO: can "index.js" be omitted? I don't know
 	// dbg("moduleFile in generateRequire: " + moduleFile);
@@ -20,6 +23,14 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 				return require(_request);
 			} else {
 				throw new Error('Not permitted to require builtin module \'' + _request + '\'');
+			}
+		} // de-facto else
+		if(t.isJSON(_request)){
+			if(permissions.requiringJSON !== false){
+				var childFile = t.resolveChildRequest(moduleFile, _request);
+				return t.getJSON(childFile);
+			} else {
+				throw new Error("Not permitted to require JSON file '" + _request + "'");
 			}
 		} // de-facto else
 		if (t.isBinaryAddon(_request)) {

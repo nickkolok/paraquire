@@ -3,6 +3,7 @@ require('./cascade-builtin-fs/main.js');
 require('./cascade-semiparaquired-builtin-fs/main.js');
 require('./cascade-paraquired-builtin-fs/main.js');
 require('./cascade-folders-builtin-fs/main.js');
+require('./requiring-json/main.js');
 
 require('./imurmurhash/main.js');
 

@@ -6,6 +6,7 @@ const path = require('path');
 const Module = require('module');
 
 var scriptcache = {};
+var   JSONcache = {};
 
 function createSandbox(){
 	var sandbox = {
@@ -14,6 +15,15 @@ function createSandbox(){
 
 	vm.createContext(sandbox);
 	return sandbox;
+}
+
+function getJSON(moduleFile){
+	if (!(moduleFile in JSONcache)){
+		JSONcache[moduleFile] = JSON.parse(
+			fs.readFileSync(moduleFile, 'utf8')
+		);
+	}
+	return JSONcache[moduleFile];
 }
 
 function getScript(moduleFile){
@@ -40,6 +50,10 @@ function isBuiltin(module) {
 	} catch(e) {
 		return false;
 	}
+}
+
+function isJSON(name) {
+	return /\.JSON$/i.test(name);
 }
 
 function resolveChildRequest(moduleFile, _request){
@@ -71,9 +85,11 @@ try{
 
 module.exports = {
     createSandbox: createSandbox,
+    getJSON: getJSON,
     getScript: getScript,
     isBinaryAddon: isBinaryAddon,
     isBuiltin: isBuiltin,
+    isJSON: isJSON,
     ownMainFileName: ownMainFileName,
     ownToolsFileName: ownToolsFileName,
     resolveChildRequest: resolveChildRequest,
