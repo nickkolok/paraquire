@@ -19,7 +19,7 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 	return function(_request) {
 		//console.log('Requiring ' + _request);
 		if (t.isBuiltin(_request)){
-			if (permissions && permissions.builtin && permissions.builtin[_request]) {
+			if (permissions.builtin && permissions.builtin[_request]) {
 				return require(_request);
 			} else {
 				throw new Error('Not permitted to require builtin module \'' + _request + '\'');
@@ -34,7 +34,7 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 			}
 		} // de-facto else
 		if (t.isBinaryAddon(_request)) {
-			if (permissions && permissions.binaryAddons === 'all') {
+			if (permissions.binaryAddons === 'all') {
 				//TODO: с этого места поподробнее, предусмотреть не только 'all'
 				return require(_request); // TODO: is the name resolved properly?
 			} else {
