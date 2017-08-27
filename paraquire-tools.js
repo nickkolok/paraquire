@@ -9,9 +9,15 @@ var scriptcache = {};
 var   JSONcache = {};
 
 function createSandbox(){
-	return vm.createContext({
+	var sandbox = vm.createContext({
         global:{},
     });
+
+    // In NodeJS 8 console is unexpectedly accessible
+    sandbox.console = null;
+    delete sandbox.console;
+    return sandbox;
+
 }
 
 function getJSON(moduleFile){
