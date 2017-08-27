@@ -61,6 +61,18 @@ function paraquire(request, permissions, parent) {
 			permissions.builtin = builtinObj;
 		}
 
+		if(permissions.globals_s) {
+			[
+				'Buffer',
+				'clearImmediate',
+				'clearInterval',
+				'clearTimeout',
+				'setImmediate',
+				'setInterval',
+				'setTimeout',
+			].map(g => sandbox[g] = sandbox.global[g] = global[g])
+		}
+
 		if(permissions.sandbox) {
 			for (var prop in permissions.sandbox) {
 				sandbox[prop] = permissions.sandbox[prop];
