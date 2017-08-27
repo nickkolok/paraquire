@@ -15,7 +15,7 @@ function createSandbox(){
 
     // In NodeJS 8 console is unexpectedly accessible
     sandbox.console = null;
-    delete sandbox.console;
+    // delete sandbox.console;
     return sandbox;
 
 }
