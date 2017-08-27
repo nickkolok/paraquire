@@ -23,7 +23,7 @@ function getScript(moduleFile){
 				fs.readFileSync(moduleFile, 'utf8') +
 			"})",
 			{filename:moduleFile}
-		)
+		);
 	}
 	return scriptcache[moduleFile];
 }
