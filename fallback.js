@@ -18,7 +18,7 @@
     // Original paraquire is a function which gets "module":
     // var paraquire = require('paraquire')(module);
     // So, we need to create a function to return which will fallback to usual require
-    var fallbackRequire = function(){return require;};
+    var fallbackRequire = function(module){return module.require;};
 
     try {
         try{
