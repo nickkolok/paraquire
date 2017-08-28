@@ -81,7 +81,7 @@ function paraquire(request, permissions, parent) {
 		if (permissions.builtin && permissions.builtin[0]) {
 			//We cannot use instanceof Array or smth like this
 			var builtinObj={};
-			permissions.builtin.map(b => builtinObj[b]=true);
+			permissions.builtin.map(function(b){builtinObj[b]=true});
 			permissions.builtin = builtinObj;
 		}
 
@@ -94,7 +94,7 @@ function paraquire(request, permissions, parent) {
 				'setImmediate',
 				'setInterval',
 				'setTimeout',
-			].map(g => sandbox[g] = sandbox.global[g] = global[g])
+			].map(function(g){sandbox[g] = sandbox.global[g] = global[g]});
 		}
 
 		if(permissions.sandbox) {
@@ -110,7 +110,7 @@ function paraquire(request, permissions, parent) {
 				throw new Error("Specifying both permissions.process and permissions.sandbox.process is forbidden");
 			}
 			sandbox.process={};
-			permissions.process.map(b => sandbox.process[b]=process[b]);			
+			permissions.process.map(function(b){sandbox.process[b]=process[b]});
 		}
 	}
 
