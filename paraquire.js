@@ -1,5 +1,5 @@
 'use strict';
-const t = require('./paraquire-tools.js');
+var t = require('./paraquire-tools.js');
 
 function dbg(a,b,c){
 	try {
