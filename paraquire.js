@@ -22,7 +22,20 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 			if (permissions.builtin && permissions.builtin[_request]) {
 				return require(_request);
 			} else {
-				throw new Error('Not permitted to require builtin module \'' + _request + '\'');
+				if(permissions.builtinErrors){
+					throw new Error(
+						'Not permitted to require builtin module \'' + _request + '\'');
+				}
+				// Returning a string seems to be useful
+				// Usually a library requires all essentive modules during initializations
+				// So that if we throw an Error, paraquired library could not initialize
+				// On the other hand,
+				// actual use of required builtins is often contained in functions,
+				// I.e. if we do not call functions using forbidden builtin,
+				// we will not have an Error and
+				// the library will be working without dangerous permissions.
+				// Make sure that you have good tests for your project ;-)
+				return 'Forbidden: ' + _request;
 			}
 		} // de-facto else
 		if(t.isJSON(_request)){
