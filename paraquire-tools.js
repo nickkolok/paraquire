@@ -10,7 +10,9 @@
     try {
         if (process && process.version) {
             var parts = process.version.split('.');
-            if (parts[0] === 'v0' && (1*parts[1]) <= 10) {
+            if (parts[0] === 'v0' && (
+                ((1*parts[1]) <= 10) || process.version === 'v0.11.0')
+            ) {
                 console.log('/**********************  WARNING  ***********************/');
                 console.log('/* Your NodeJS is too old, paraquire cannot protect it. */');
                 console.log('/* Your application will run without full protection    */');
