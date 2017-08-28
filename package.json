@@ -2,7 +2,7 @@
   "name": "paraquire",
   "version": "0.0.20",
   "description": "Paranoidal require",
-  "main": "fallback.js",
+  "main": "paraquire.js",
   "browser": "browser.js",
   "directories": {
     "test": "tests"
