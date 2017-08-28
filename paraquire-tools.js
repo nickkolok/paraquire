@@ -1,5 +1,28 @@
 'use strict';
 
+// {{ NodeJS <= 0.10 warning
+    // In NodeJS <= 0.10 stack access limitation in strict mode
+    // is not properly implemented
+    // So, paraquire cannot protect from attacks through stack
+
+    // Any help with adapting paraquire for Node <= 0.10 would be kindly appreciated
+    // at github.com/nickkolok/paraquire or smth like that
+    try {
+        if (process && process.version) {
+            var parts = process.version.split('.');
+            if (parts[0] === 'v0' && (1*parts[1]) <= 10) {
+                console.log('/**********************  WARNING  ***********************/');
+                console.log('/* Your NodeJS is too old, paraquire cannot protect it. */');
+                console.log('/* Your application will run without full protection    */');
+                console.log('/********************************************************/');
+            }
+        }
+    } catch(e) {
+    }
+// }} NodeJS <= 0.10 warning
+
+
+
 var vm = require('vm');
 var fs = require('fs');
 var path = require('path');
