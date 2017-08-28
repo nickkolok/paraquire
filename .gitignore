@@ -1,1 +1,4 @@
 /node_modules
+
+# `git merge` temporary files
+*.orig
