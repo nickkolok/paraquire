@@ -52,7 +52,7 @@ function isBinaryAddon(name) {
 function isBuiltin(module) {
 	try {
 		const resolved = require.resolve(module);
-		return !resolved.includes(path.sep);
+		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
 		return false;
 	}
