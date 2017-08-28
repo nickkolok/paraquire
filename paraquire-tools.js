@@ -1,9 +1,9 @@
 'use strict';
 
-const vm = require('vm');
-const fs = require('fs');
-const path = require('path');
-const Module = require('module');
+var vm = require('vm');
+var fs = require('fs');
+var path = require('path');
+var Module = require('module');
 
 var scriptcache = {};
 var   JSONcache = {};
@@ -51,7 +51,7 @@ function isBinaryAddon(name) {
 // From: https://github.com/nodejs/node/issues/3307#issuecomment-185734608
 function isBuiltin(module) {
 	try {
-		const resolved = require.resolve(module);
+		var resolved = require.resolve(module);
 		return resolved.indexOf(path.sep) === -1;
 	} catch(e) {
 		return false;
