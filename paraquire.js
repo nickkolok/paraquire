@@ -112,6 +112,21 @@ function paraquire(request, permissions, parent) {
 			sandbox.process={};
 			permissions.process.map(function(b){sandbox.process[b]=process[b]});
 		}
+		if(permissions['process.env']){
+			if(permissions.sandbox.process){
+				throw new Error(
+					"Specifying both permissions.process and permissions['process.env'] is forbidden"
+				);
+			}
+			if(permissions.sandbox.process.indexOf('env') !== -1){ //TODO: test
+				throw new Error(
+					"Specifying both permissions.process.env and permissions['process.env'] is forbidden"
+				);
+			}
+			sandbox.process = sandbox.process || {};
+			sandbox.process.env = {};
+			permissions['process.env'].map(function(b){sandbox.process.env[b]=process.env[b]});
+		}
 	}
 
 //	dbg('parent in paraquire():');
