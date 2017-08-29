@@ -1,6 +1,6 @@
 {
   "name": "paraquire",
-  "version": "0.0.21",
+  "version": "0.0.23",
   "description": "Paranoidal require",
   "main": "paraquire.js",
   "browser": "browser.js",

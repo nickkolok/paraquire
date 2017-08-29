@@ -118,7 +118,7 @@ function paraquire(request, permissions, parent) {
 					"Specifying both permissions.process and permissions['process.env'] is forbidden"
 				);
 			}
-			if(permissions.sandbox.process.indexOf('env') !== -1){ //TODO: test
+			if(permissions.sandbox.process && permissions.sandbox.process.indexOf('env') !== -1){ //TODO: test
 				throw new Error(
 					"Specifying both permissions.process.env and permissions['process.env'] is forbidden"
 				);
