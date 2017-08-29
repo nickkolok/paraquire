@@ -39,3 +39,25 @@ var lib = paraquire('untrusted-lib',{
 });
 ```
 So, `untrusted-lib` will have access to built-in modules `http` and `https` (i.e. `untrusted-lib` can do `require('https')`, but cannot do `require('fs')`) and to global `console`.
+
+## Compatibility
+
+`paraquire` run with full functionality on `NodeJS`:
+
+* `0.11.1 - 8.4.0`
+
+`paraquire` runs, but cannot protect from some threats on `NodeJS`:
+
+* `0.9.2 - 0.11.0`
+
+* `~0.8.14`
+
+* `0.8.9 - 0.8.12`
+
+Once more: `paraquire` runs on these versions.
+If your application or library uses `paraquire`,
+`paraquire` will not ruin your project's compatibility with old `NodeJS` versions.
+
+`paraquire` was not tested on other `NodeJS` versions.
+
+[paraquire on Travis CI](https://travis-ci.org/nickkolok/paraquire)
