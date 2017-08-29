@@ -69,5 +69,6 @@ try{
     var f = paraquire("./lib-with-builtin-fs.js", {builtin:['fs', 'http']});
     f();
 }catch(e){
+    console.log(e);
     throw new Error ('Unable to access permitted builtin module "fs"');
 }
