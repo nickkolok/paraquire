@@ -127,6 +127,17 @@ function paraquire(request, permissions, parent) {
 			sandbox.process.env = {};
 			permissions['process.env'].map(function(b){sandbox.process.env[b]=process.env[b]});
 		}
+		if(permissions.console){
+			if(permissions.sandbox.console){
+				throw new Error("Specifying both permissions.console and permissions.sandbox.console is forbidden");
+			}
+			if(permissions.console === true){
+				sandbox.console=console;
+			} else {
+				sandbox.console={};				
+				permissions.console.map(function(b){sandbox.console[b]=console[b]});
+			}
+		}
 	}
 
 //	dbg('parent in paraquire():');
