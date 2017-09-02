@@ -10,4 +10,5 @@ require('./imurmurhash/main.js');
 require('./callsite-stack/main.js');
 
 require('./forbid-process/main.js');
+require('./cascade-require-process/main.js');
 require('./forbid-console/main.js');
