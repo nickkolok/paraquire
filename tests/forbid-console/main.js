@@ -34,6 +34,17 @@ if (!accessed){
 
 var accessed = false;
 try{
+    var f = paraquire("./lib-with-console.js", {console:true,sandbox: {Array:Array}});
+    f();
+    accessed = true;
+}catch(e){
+}
+if (!accessed){
+    throw new Error('Unable to access permitted "console"');
+}
+
+var accessed = false;
+try{
     var f = paraquire("./lib-with-console.js", {console:['log']});
     f();
     accessed = true;
