@@ -61,3 +61,12 @@ If your application or library uses `paraquire`,
 `paraquire` was not tested on other `NodeJS` versions.
 
 [paraquire on Travis CI](https://travis-ci.org/nickkolok/paraquire)
+
+## Paraquire CAN'T...
+
+1. `paraquire` can't give you any warranty.
+
+2. `paraquire` can't protect you from `preinstall` and `postinstall` scripts of `npm`.
+Use `npm install --ignore-scripts`.
+
+3. `paraquire` не может ограничить пакету Яровой доступ к `https` :-(
