@@ -29,12 +29,9 @@ And that's all, `untrusted-lib` will be in jail without access to built-in modul
 ### Giving partial access
 ```js
 var lib = paraquire('untrusted-lib',{
-    builtin: {
-        'http': true,
-        'https': true,
-    },
+    builtin: ['http', 'https'],
     sandbox: {
-        console: console
+        console: {log: console.log}
     }
 });
 ```
