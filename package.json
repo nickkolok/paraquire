@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "npm install imurmurhash callsite; ln -s .. node_modules/paraquire; node tests"
+    "test": "npm install imurmurhash callsite signal-exit; ln -s .. node_modules/paraquire; node tests"
   },
   "repository": {
     "type": "git",

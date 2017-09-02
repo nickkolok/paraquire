@@ -6,6 +6,7 @@ require('./cascade-folders-builtin-fs/main.js');
 require('./requiring-json/main.js');
 
 require('./imurmurhash/main.js');
+require('./signal-exit/main.js');
 
 require('./callsite-stack/main.js');
 
