@@ -167,5 +167,6 @@ If your application or library uses `paraquire`,
 
 2. `paraquire` can't protect you from `preinstall` and `postinstall` scripts of `npm`.
 Use `npm install --ignore-scripts`.
+[Read more...](https://twitter.com/maybekatz/status/892501201551368192)
 
 3. `paraquire` не может ограничить пакету Яровой доступ к `https` :-(
