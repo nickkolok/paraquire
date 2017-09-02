@@ -41,7 +41,7 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 		if(t.isJSON(_request)){
 			if(permissions.requiringJSON !== false){
 				var childFile = t.resolveChildRequest(moduleFile, _request);
-				return t.getJSON(childFile);
+				return require(childFile);
 			} else {
 				throw new Error("Not permitted to require JSON file '" + _request + "'");
 			}

@@ -4,6 +4,7 @@ require('./cascade-semiparaquired-builtin-fs/main.js');
 require('./cascade-paraquired-builtin-fs/main.js');
 require('./cascade-folders-builtin-fs/main.js');
 require('./requiring-json/main.js');
+require('./requiring-json-escalation/main.js');
 
 require('./imurmurhash/main.js');
 require('./signal-exit/main.js');

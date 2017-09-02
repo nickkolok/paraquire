@@ -116,7 +116,7 @@ try{
 
 module.exports = {
     createSandbox: createSandbox,
-    getJSON: getJSON,
+//  getJSON: getJSON, // at this moment this is not needed, but who knows?
     getScript: getScript,
     isBinaryAddon: isBinaryAddon,
     isBuiltin: isBuiltin,
