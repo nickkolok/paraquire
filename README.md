@@ -155,13 +155,13 @@ You could use `sandbox:{console:console}` instead of this.
 
 #### `globals_s`
 Has the library access to
-    'Buffer',
-    'clearImmediate',
-    'clearInterval',
-    'clearTimeout',
-    'setImmediate',
-    'setInterval',
-    'setTimeout'
+    `Buffer`,
+    `clearImmediate`,
+    `clearInterval`,
+    `clearTimeout`,
+    `setImmediate`,
+    `setInterval`,
+    `setTimeout`
 ?
 Default `false`.
 Useful for libraries working with asynchronous streams.
