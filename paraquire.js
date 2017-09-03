@@ -138,6 +138,12 @@ function paraquire(request, permissions, parent) {
 				permissions.console.map(function(b){sandbox.console[b]=console[b]});
 			}
 		}
+		if(permissions.Buffer){
+			if(permissions.sandbox.Buffer){
+				throw new Error("Specifying both permissions.Buffer and permissions.sandbox.Buffer is forbidden");
+			}
+			sandbox.Buffer=Buffer;
+		}
 	}
 
 //	dbg('parent in paraquire():');

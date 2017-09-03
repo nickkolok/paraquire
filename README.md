@@ -153,6 +153,12 @@ Has the library access to `console`?
 Default `false`.
 You could use `sandbox:{console:console}` instead of this.
 
+#### `Buffer`
+Has the library access to global `Buffer` object?
+Default `false`.
+You could use `sandbox:{Buffer:Buffer}` instead of this.
+Note that access to builtin `buffer` should be given separately if needed.
+
 #### `globals_s`
 Has the library access to
     `Buffer`,
