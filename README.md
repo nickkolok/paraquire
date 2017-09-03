@@ -159,7 +159,7 @@ Default `false`.
 You could use `sandbox:{Buffer:Buffer}` instead of this.
 Note that access to builtin `buffer` should be given separately if needed.
 
-#### `globals_s`
+#### `globals_s` or `globalsSafe` (specially for camelCase fans)
 Has the library access to
     `Buffer`,
     `clearImmediate`,

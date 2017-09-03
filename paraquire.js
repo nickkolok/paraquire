@@ -85,7 +85,7 @@ function paraquire(request, permissions, parent) {
 			permissions.builtin = builtinObj;
 		}
 
-		if(permissions.globals_s) {
+		if(permissions.globals_s || permissions.globalsSafe) {
 			[
 				'Buffer',
 				'clearImmediate',
