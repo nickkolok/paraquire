@@ -153,15 +153,22 @@ function runFile(moduleFile, sandbox, permissions, parent){
 	// sandbox - context in which the file should be runned
 	// permissions - permissions object with which the file shoul be runned
 	// parent - module which is parent to running file
+	if (!permissions){
+		permissions = {};
+	}
+
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
 	var returnedExports = {};
 	var returnedModule = {
 		exports: returnedExports,
-		parent:parent,
 		filename: moduleFile,
 	};
+	if (permissions.parent) {
+		// TODO: tests
+		returnedModule.parent = parent;
+	}
 	premodule(
 		generateRequire(sandbox, permissions, moduleFile, returnedModule),
 		returnedModule,

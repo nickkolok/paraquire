@@ -136,6 +136,14 @@ Object which will be `global` for the library.
 var f = paraquire("lib-with-console", {sandbox: {process: fakeProcess, console: fakeConsole}});
 ```
 
+#### `parent`
+Will modules provided by the library know their parents?
+Default `false`.
+
+*Tip: be careful with this permission because of `module.parent.exports.doSmthVeryPainful()`*
+
+*Notice: this permission is local. It means that if A paraquires B **without** this permission, and B paraquires C **with** this permission, then C would **have** this permission. To be more precise, C will know it's parents up to B and will not know A.*
+
 ## Compatibility
 
 `paraquire` run with full functionality on `NodeJS`:
