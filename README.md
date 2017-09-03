@@ -126,6 +126,10 @@ But while using other functions and while initializing no error will be thrown.
 
 *Tip: make sure that you have good tests for your project ;-)*
 
+#### `requiringJSON`
+Can library require `*.json` files?
+Default `true`, because it is quite basic `NodeJS` ability.
+
 #### `sandbox`
 Object which will be `global` for the library.
 
@@ -143,6 +147,37 @@ Default `false`.
 *Tip: be careful with this permission because of `module.parent.exports.doSmthVeryPainful()`*
 
 *Notice: this permission is local. It means that if A paraquires B **without** this permission, and B paraquires C **with** this permission, then C would **have** this permission. To be more precise, C will know it's parents up to B and will not know A.*
+
+#### `console`
+Has the library access to `console`?
+Default `false`.
+You could use `sandbox:{console:console}` instead of this.
+
+#### `globals_s`
+Has the library access to
+    'Buffer',
+    'clearImmediate',
+    'clearInterval',
+    'clearTimeout',
+    'setImmediate',
+    'setInterval',
+    'setTimeout'
+?
+Default `false`.
+Useful for libraries working with asynchronous streams.
+Could be replaced with `sandbox` settings.
+
+#### `process`
+Array of `process` properties which the library has access to.
+Default `[]`.
+Incompatible with `sandbox.process`, but could be replaced with it.
+
+#### `process.env`
+Array of `process.env` properties (i.e. environmemnt variables)
+which the library has access to.
+Default `[]`.
+Incompatible with `sandbox.process.env`, but could be replaced with it.
+
 
 ## Compatibility
 
