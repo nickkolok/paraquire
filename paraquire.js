@@ -168,7 +168,7 @@ function runFile(moduleFile, sandbox, permissions, parent){
 	}
 
 	if (moduleFile in permissions._cache){
-		return permissions._cache[moduleFile];
+		return permissions._cache[moduleFile].exports;
 	}
 	
 	var moduleContents = t.getScript(moduleFile);
