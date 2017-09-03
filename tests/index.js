@@ -6,6 +6,8 @@ require('./cascade-folders-builtin-fs/main.js');
 require('./requiring-json/main.js');
 require('./requiring-json-escalation/main.js');
 
+require('./cyclic-require/main.js');
+
 require('./imurmurhash/main.js');
 require('./signal-exit/main.js');
 

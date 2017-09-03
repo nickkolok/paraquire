@@ -163,6 +163,14 @@ function runFile(moduleFile, sandbox, permissions, parent){
 		permissions = {};
 	}
 
+	if (!permissions._cache){
+		permissions._cache = {};
+	}
+
+	if (moduleFile in permissions._cache){
+		return permissions._cache[moduleFile];
+	}
+	
 	var moduleContents = t.getScript(moduleFile);
 
 	var premodule = moduleContents.runInContext(sandbox);
@@ -171,6 +179,8 @@ function runFile(moduleFile, sandbox, permissions, parent){
 		exports: returnedExports,
 		filename: moduleFile,
 	};
+	permissions._cache[moduleFile] = returnedModule;
+
 	if (permissions.parent) {
 		// TODO: tests
 		returnedModule.parent = parent;
