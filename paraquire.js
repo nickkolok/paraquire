@@ -1,6 +1,16 @@
+// This file geerates callable `paraquire` function.
+// Functions in this file does not have direct access to builtin modules,
+// except two cases:
+// 1. Access through `t = require('./paraquire-tools.js')`
+// 2. Access through regular `require`, when builtins are passed to paraquired library
+// Thus, when `paraquire` is `require`d in other `paraquire` jail,
+// there shouldn't be privilege escalation in this file
+
 'use strict';
 var t = require('./paraquire-tools.js');
 
+// Simple function to log without errors if console is not permitted
+// (for example, into cascade paraquire)
 function dbg(a,b,c){
 	try {
 		console.log(a,b,c);
@@ -66,6 +76,18 @@ function generateRequire(_sandbox, permissions, moduleFile, parent){
 				//TODO: unhardcode?
 				_request === './paraquire-tools.js'
 			){
+				// If `paraquire` runs in another `paraquire` jail,
+				// it normally should not have access to `fs`, `path` and `vm`.
+				// But paraquire needs thie access.
+				// So, when this function is called from this file
+				// requiring `./paraquire-tools.js`,
+				// and only in that case,
+				// `./paraquire-tools.js` with full permissions is returned.
+				// It seems to be safe to do this, because this file
+				// remains running into jail with partial permissions,
+				// so all `require`, `console`, `process`, etc. references
+				// go to upper `paraquire` instance.
+
 				return t;
 			}
 			return runFile(childFile, _sandbox, permissions, parent);
