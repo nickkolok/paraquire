@@ -66,6 +66,32 @@ var xtend = paraquire('xtend');
 ```
 *(note: `xtend` is a very simple library which does not need any permissions)*
 
+### Modifying `require` function
+Sometimes, e.g. if you're writing a library which should work under `browserify`,
+it is useful to modify existing `require` function.
+```js
+require = require('paraquire')(module, {require: require, inherit: true}) // eslint-disable-line no-global-assign
+```
+The mechanism described above overrides existing `require` function:
+
+a) If you call `require` with single argument as usual, usual `require` will be executed,
+i.e. `require`d library will inherit full permissions.
+
+b) If you call `require` with two arguments, `paraquire` will be executed
+with permissions given as the second argument.
+
+*Note: if you want to require a library with default (minimal) permissions, use:*
+```js
+var xtend = require('xtend', {})
+```
+not 
+```js
+var xtend = require('xtend')
+```
+
+All examples below mention standalone `paraquire` function but could be applied
+to redefined `require` too.
+
 ### Permissions options
 
 #### `builtin`
