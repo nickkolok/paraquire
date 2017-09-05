@@ -234,8 +234,15 @@ paraquire('./lib-with-global-1');
 */
 
 
-function generateParaquireByParent (parent) {
+function generateParaquireByParent (parent, options) {
 	return function(request, permissions) {
+		if (!options) {
+			options = {};
+		}
+		if (options && options.require && options.inherit && arguments.length === 1) {
+			// Use regular require
+			return options.require(request);
+		}
 		return paraquire(request, permissions, parent);
 	}
 }
