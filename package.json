@@ -8,10 +8,15 @@
     "test": "tests"
   },
   "dependencies": {
+    "callsite": "^1.0.0",
+    "imurmurhash": "^0.1.4",
+    "signal-exit": "^3.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tap": "^11.0.0"
+  },
   "scripts": {
-    "test": "npm install imurmurhash callsite signal-exit; ln -s .. node_modules/paraquire; node tests"
+    "test": "npm install imurmurhash callsite signal-exit; ln -s .. node_modules/paraquire; node tests; tap tests/callsite-stack/main.js --cov"
   },
   "repository": {
     "type": "git",
