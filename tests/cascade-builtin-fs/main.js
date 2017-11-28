@@ -1,40 +1,63 @@
 var paraquire = require("paraquire")(module);
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
-    f();
-}catch(e){
-    console.log(e);
-    throw new Error ('Unable to access permitted builtin module "fs"');
-}
 
-var accessed = false;
-try{
-    var f = paraquire("./lib-with-builtin-fs.js");
-    f();
-    accessed = true;
-}catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs"');
-    }
-}
 
-accessed = false;
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f();
-    accessed = true;
-}catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs", while only "http" is permitted');
-    }
-}
+var tap = require('tap');
 
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true, http:true}});
-    f();
-}catch(e){
-    throw new Error ('Unable to access permitted builtin module "fs"');
-}
+
+tap.doesNotThrow(
+	()=>{
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
+		f();
+	},
+	'Unable to access permitted builtin module "fs" (1)'
+);
+
+var f;
+tap.throws(
+	()=>{
+		f = paraquire("./lib-with-builtin-fs.js");
+		f();
+	},
+	'Able to access forbidden builtin module "fs" (2)' + 
+		'\n' + f //+ '\n' + f()
+		+ '\n' + (typeof f)
+);
+
+var f;
+tap.throws(
+	()=>{
+		f = paraquire("./lib-with-builtin-fs-1.js");
+		f();
+	},
+	'Able to access forbidden builtin module "fs"\n'+f//+'\n'+f()
+);
+
+
+tap.throws(
+	()=>{
+		var f = paraquire("./lib-with-builtin-fs-final.js");
+		f();
+	},
+	'Able to access forbidden builtin module "fs" - straight final'
+);
+
+tap.throws(
+	()=>{
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
+		f();
+	},
+	'Able to access forbidden builtin module "fs", while only "http" is permitted'
+);
+
+
+tap.doesNotThrow(
+	()=>{
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true, http:true}});
+		f();
+	},
+	'Unable to access permitted builtin module "fs"'
+);
+
 
 
 var accessed1 = false;
@@ -51,3 +74,4 @@ try{
         throw new Error ('Error in two cosequential paraquire calls with different permissions');
     }
 }
+

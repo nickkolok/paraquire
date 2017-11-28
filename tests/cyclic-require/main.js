@@ -1,4 +1,11 @@
 var paraquire = require('paraquire')(module);
 
-var result = paraquire('./a.js');
-console.log(result);
+const tap = require('tap');
+
+tap.doesNotThrow(
+	()=>{
+		var result = paraquire('./a.js');
+		console.log(result);
+	},
+	'Cyclic'
+);

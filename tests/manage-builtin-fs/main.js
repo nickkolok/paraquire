@@ -1,56 +1,49 @@
 var paraquire = require("paraquire")(module);
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
-    f();
-}catch(e){
-    console.log(e);
-    throw new Error ('Unable to access permitted builtin module "fs"');
-}
 
-var accessed = false;
-try{
-    var f = paraquire("./lib-with-builtin-fs.js");
-    f();
-    accessed = true;
-}catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs"');
-    }
-}
+var tap = require('tap');
 
-accessed = false;
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f();
-    accessed = true;
-}catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs", while only "http" is permitted');
-    }
-}
+tap.doesNotThrow(
+	()=> {
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
+		f();
+	},
+	'Unable to access permitted builtin module "fs"'
+);
 
-try{
-    var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true, http:true}});
-    f();
-}catch(e){
-    throw new Error ('Unable to access permitted builtin module "fs"');
-}
+tap.throws(
+	()=> {
+		var f = paraquire("./lib-with-builtin-fs.js");
+		f();
+	},
+    'Able to access forbidden builtin module "fs"'
+);
+
+tap.throws(
+	()=> {
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
+		f();
+	},
+	'Able to access forbidden builtin module "fs", while only "http" is permitted'
+);
 
 
-var accessed1 = false;
-var accessed2 = false;
-try{
-    var f1 = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
-    var f2 = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f1();
-    accessed1 = true;
-    f2();
-    accessed2 = true;
-}catch(e){
-    if((!accessed1)|| (accessed2)) {
-        throw new Error ('Error in two cosequential paraquire calls with different permissions');
-    }
-}
+tap.doesNotThrow(
+	()=> {
+		var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true, http:true}});
+		f();
+	},
+	'Unable to access permitted builtin module "fs"'
+);
+
+tap.throws(
+	()=> {
+		var f1 = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
+		var f2 = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
+		f1();
+		f2();
+	},
+	'Error in two cosequential paraquire calls with different permissions'
+);
 
 //Builtins as array
 

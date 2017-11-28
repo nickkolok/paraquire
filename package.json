@@ -1,7 +1,7 @@
 {
-  "name": "paraquire",
+  "name": "paraquire-tap-tests",
   "version": "1.4.1",
-  "description": "Paranoidal require",
+  "description": "Paranoidal require - tests suite",
   "main": "paraquire.js",
   "browser": "browser.js",
   "directories": {
@@ -9,14 +9,13 @@
   },
   "dependencies": {
     "callsite": "^1.0.0",
-    "imurmurhash": "^0.1.4",
-    "signal-exit": "^3.0.2"
-  },
-  "devDependencies": {
+    "imurmurhash": "0.1.4",
+    "paraquire": "^1.4.1",
+    "signal-exit": "^3.0.2",
     "tap": "^11.0.0"
   },
   "scripts": {
-    "test": "npm install imurmurhash callsite signal-exit; ln -s .. node_modules/paraquire; node tests; tap tests/callsite-stack/main.js --cov"
+    "test": "tap tests/*/main.js --cov"
   },
   "repository": {
     "type": "git",

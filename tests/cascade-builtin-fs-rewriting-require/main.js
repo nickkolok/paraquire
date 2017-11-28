@@ -1,11 +1,14 @@
 require = require('paraquire')(module, {require: require, inherit: true}) // eslint-disable-line no-global-assign
-try{
-    var f = require("./lib-with-builtin-fs.js", {builtin:{fs:true}});
-    f();
-}catch(e){
-    console.log(e);
-    throw new Error ('Unable to access permitted builtin module "fs"');
-}
+
+const tap = require('tap');
+
+tap.doesNotThrow(
+	()=>{
+		var f = require("./lib-with-builtin-fs.js", {builtin:{fs:true}});
+		f();
+	},
+	'Unable to access permitted builtin module "fs"'
+);
 
 var accessed = false;
 try{

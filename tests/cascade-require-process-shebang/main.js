@@ -2,16 +2,15 @@
 
 var paraquire = require("paraquire")(module);
 
-var accessed = false;
-try{
-    var f = paraquire("./proxy-lib.js");
-    console.log(f());
-    accessed = true;
-}catch(e){
-}
-if (accessed){
-    throw new Error('Able to access forbidden "process"');
-}
+const tap = require('tap');
+
+tap.throws(
+	()=>{
+		var f = paraquire("./proxy-lib.js");
+		console.log(f());
+	},
+	'Able to access forbidden "process"'
+);
 
 accessed = false;
 try{
