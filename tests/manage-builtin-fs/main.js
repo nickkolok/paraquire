@@ -1,6 +1,6 @@
 var paraquire = require("paraquire")(module);
 
-var tap = require('tap');
+const tap = require('tap');
 
 tap.doesNotThrow(
 	()=> {

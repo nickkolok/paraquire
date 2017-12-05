@@ -1,4 +1,7 @@
 var paraquire = require("paraquire")(module);
+
+const tap = require('tap');
+
 try{
     var f = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
     f();

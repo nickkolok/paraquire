@@ -61,17 +61,16 @@ tap.doesNotThrow(
 
 
 var accessed1 = false;
-var accessed2 = false;
-try{
-    var f1 = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
-    var f2 = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f1();
-    accessed1 = true;
-    f2();
-    accessed2 = true;
-}catch(e){
-    if((!accessed1)|| (accessed2)) {
-        throw new Error ('Error in two cosequential paraquire calls with different permissions');
-    }
-}
+tap.throws(
+	()=>{
+		var f1 = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
+		var f2 = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
+		f1();
+		accessed1 = true;
+		f2();
+	},
+	'Error in two cosequential paraquire calls with different permissions'
+);
+
+tap.equals(accessed1,true,'Error in two cosequential paraquire calls with different permissions');
 

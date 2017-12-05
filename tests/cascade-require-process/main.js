@@ -1,5 +1,7 @@
 var paraquire = require("paraquire")(module);
 
+const tap = require('tap');
+
 var accessed = false;
 try{
     var f = paraquire("./proxy-lib.js");
