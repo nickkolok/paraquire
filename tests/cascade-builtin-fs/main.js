@@ -11,22 +11,26 @@ var accessed = false;
 try{
     var f = paraquire("./lib-with-builtin-fs.js");
     f();
+	f()();
+	//console.log(''+f);
+	//console.log(''+f());
     accessed = true;
 }catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs"');
-    }
+	//console.log(e);
+}
+if(accessed) {
+    throw new Error ('Able to access forbidden builtin module "fs"');
 }
 
 accessed = false;
 try{
     var f = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f();
+    f()();
     accessed = true;
 }catch(e){
-    if(accessed) {
-        throw new Error ('Able to access forbidden builtin module "fs", while only "http" is permitted');
-    }
+}
+if(accessed) {
+	throw new Error ('Able to access forbidden builtin module "fs", while only "http" is permitted');
 }
 
 try{
@@ -42,12 +46,15 @@ var accessed2 = false;
 try{
     var f1 = paraquire("./lib-with-builtin-fs.js", {builtin:{fs:true}});
     var f2 = paraquire("./lib-with-builtin-fs.js", {builtin:{http:true}});
-    f1();
+    f1()();
     accessed1 = true;
-    f2();
+    f2()();
     accessed2 = true;
 }catch(e){
     if((!accessed1)|| (accessed2)) {
         throw new Error ('Error in two cosequential paraquire calls with different permissions');
     }
+}
+if((!accessed1)|| (accessed2)) {
+	throw new Error ('Error in two cosequential paraquire calls with different permissions');
 }
