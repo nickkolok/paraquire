@@ -243,6 +243,41 @@ function generateParaquireByParent (parent, options) {
 			// Use regular require
 			return options.require(request);
 		}
+
+		if (!options.preserveFunctionConstructor){
+			var oldFunction = Function;
+
+			/*
+			var newFunction = function(){
+				// Last argument is code, other are real arguments
+			}
+			*/
+
+			function newFunction(){
+				//this.constructor = this;
+				var lastArg = arguments[arguments.length - 1];
+				var realArgs = [].slice.call(arguments,0,arguments.length - 1);
+				return oldFunction(
+					"(function(){" +
+						"var process;" +
+						//"var code = arguments[arguments.length-1];" +
+						//"arguments.length--;" +
+						"return function("+realArgs.join(',')+"){"+
+							lastArg +
+						"}" +
+					"})();"
+				);
+			};
+			newFunction.constructor = newFunction;
+			newFunction.prototype.constructor = newFunction;
+
+			Function.prototype.constructor = newFunction;
+			Function = newFunction;
+			Function.prototype.constructor = newFunction;
+			
+
+		}
+
 		return paraquire(request, permissions, parent);
 	}
 }
